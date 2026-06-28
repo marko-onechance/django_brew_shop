@@ -1,0 +1,32 @@
+databases:
+  - name: hop-and-barley-db
+    plan: free
+
+services:
+  - type: web
+    name: hop-and-barley
+    runtime: docker
+    plan: free
+    envVars:
+      - key: SECRET_KEY
+        generateValue: true
+      - key: DEBUG
+        value: "False"
+      - key: ALLOWED_HOSTS
+        value: .onrender.com
+      - key: DATABASE_URL
+        fromDatabase:
+          name: hop-and-barley-db
+          property: connectionString
+      - key: USE_PROXY_SSL_HEADER
+        value: "True"
+      - key: SESSION_COOKIE_SECURE
+        value: "True"
+      - key: CSRF_COOKIE_SECURE
+        value: "True"
+      - key: DEMO_ADMIN_USER
+        value: admin
+      - key: DEMO_ADMIN_PASSWORD
+        generateValue: true
+      - key: EMAIL_BACKEND
+        value: django.core.mail.backends.console.EmailBackend

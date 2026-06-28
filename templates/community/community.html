@@ -1,0 +1,166 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Community | Hop & Barley{% endblock %}
+
+{% block content %}
+
+  <!-- Page header block -->
+  <div class="guides-page-header">
+    <div class="container">
+      <div class="guides-header__top">
+        <div>
+          <p class="eyebrow">Better brews, brewed together</p>
+          <h1 class="guides-header__title">Brewer's Community</h1>
+        </div>
+        {% if user.is_authenticated %}
+        <a href="#" class="button button--primary" style="flex: 0 0 auto; width: fit-content; padding: 8px 18px; font-size: 13px; white-space: nowrap;"><i class="fa-solid fa-plus" style="margin-right: 6px;"></i>Share a Brew</a>
+        {% else %}
+        <a href="{% url 'login' %}" class="button button--primary" style="flex: 0 0 auto; width: fit-content; padding: 8px 18px; font-size: 13px; white-space: nowrap;"><i class="fa-solid fa-right-to-bracket"></i> Sign in</a>
+        {% endif %}
+      </div>
+      <p class="guides-header__desc">Share your batches, ask questions, and get inspired by recipes from homebrewers around the world.</p>
+    </div>
+  </div>
+
+<div class="container" style="padding-bottom: 64px;">
+
+  <!-- Stats -->
+  <div class="community-stats">
+    <div class="kpi kpi--accent">
+      <div class="kpi__label"><i class="fa-solid fa-users"></i> Members</div>
+      <div class="kpi__value">1,248</div>
+      <div class="kpi__sub">and growing</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__label"><i class="fa-solid fa-beer-mug-empty"></i> Batches shared</div>
+      <div class="kpi__value">3,712</div>
+      <div class="kpi__sub">more every week</div>
+    </div>
+    <div class="kpi">
+      <div class="kpi__label"><i class="fa-solid fa-comments"></i> Discussions</div>
+      <div class="kpi__value">896</div>
+      <div class="kpi__sub">questions & advice</div>
+    </div>
+  </div>
+
+  <!-- Main grid: feed + sidebar -->
+  <div class="community-grid">
+
+    <!-- Brew feed -->
+    <div class="brew-feed">
+
+      <article class="brew-post">
+        <div class="brew-post__head">
+          <span class="avatar">B</span>
+          <div>
+            <div class="brew-post__author">brewer_sam</div>
+            <div class="brew-post__meta">2 hours ago · West Coast IPA</div>
+          </div>
+          <span class="brew-post__badge">Batch #14</span>
+        </div>
+        <div class="brew-post__media">
+          <img src="{% static 'img/products/ipa_kit.jpg' %}" alt="West Coast IPA batch">
+        </div>
+        <div class="brew-post__body">
+          <h3>Finally nailed the bitterness</h3>
+          <p>Third attempt at a West Coast IPA — this time I held the dry-hop for exactly 4 days and the aroma is explosive. Cascade + Citra forever. OG hit 1.063, FG landed at 1.010. Clean, sharp, refreshing.</p>
+        </div>
+        <div class="brew-post__actions">
+          <button><i class="fa-regular fa-heart"></i> 48</button>
+          <button><i class="fa-regular fa-comment"></i> 12</button>
+          <button><i class="fa-regular fa-bookmark"></i> Save</button>
+        </div>
+      </article>
+
+      <article class="brew-post">
+        <div class="brew-post__head">
+          <span class="avatar" style="background:#31572c;">M</span>
+          <div>
+            <div class="brew-post__author">malt_master</div>
+            <div class="brew-post__meta">yesterday · Oatmeal Stout</div>
+          </div>
+          <span class="brew-post__badge">Batch #7</span>
+        </div>
+        <div class="brew-post__media">
+          <img src="{% static 'img/products/caramel_malt.jpg' %}" alt="Oatmeal stout">
+        </div>
+        <div class="brew-post__body">
+          <h3>Velvet in a glass</h3>
+          <p>Added flaked oats alongside caramel malt — the body became unbelievably creamy. Sharing the full recipe in the comments. Highly recommend Wyeast 1084 Irish Ale for this one.</p>
+        </div>
+        <div class="brew-post__actions">
+          <button><i class="fa-regular fa-heart"></i> 73</button>
+          <button><i class="fa-regular fa-comment"></i> 21</button>
+          <button><i class="fa-regular fa-bookmark"></i> Save</button>
+        </div>
+      </article>
+
+      <article class="brew-post">
+        <div class="brew-post__head">
+          <span class="avatar" style="background:#7b3f00;">L</span>
+          <div>
+            <div class="brew-post__author">lager_lover</div>
+            <div class="brew-post__meta">3 days ago · Czech Pilsner</div>
+          </div>
+          <span class="brew-post__badge">Batch #3</span>
+        </div>
+        <div class="brew-post__media">
+          <img src="{% static 'img/products/pilsner_malt.jpg' %}" alt="Czech Pilsner">
+        </div>
+        <div class="brew-post__body">
+          <h3>Six weeks of patience, zero regrets</h3>
+          <p>Lagered at 2°C for 6 weeks. The clarity is stunning and the taste is exactly what I wanted — soft, bready, with a clean Saaz finish. Worth every day of waiting.</p>
+        </div>
+        <div class="brew-post__actions">
+          <button><i class="fa-regular fa-heart"></i> 91</button>
+          <button><i class="fa-regular fa-comment"></i> 34</button>
+          <button><i class="fa-regular fa-bookmark"></i> Save</button>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- Sidebar -->
+    <aside class="community-side">
+
+      <div class="side-card">
+        <h3><i class="fa-solid fa-fire"></i> Active Discussions</h3>
+        <a href="#" class="thread">
+          <h4>How do I avoid infection during fermentation?</h4>
+          <div class="meta"><span><i class="fa-regular fa-comment"></i> 34 replies</span><span><i class="fa-regular fa-clock"></i> 1h ago</span></div>
+        </a>
+        <a href="#" class="thread">
+          <h4>Best yeast for NEIPA — share your experience</h4>
+          <div class="meta"><span><i class="fa-regular fa-comment"></i> 28 replies</span><span><i class="fa-regular fa-clock"></i> 3h ago</span></div>
+        </a>
+        <a href="#" class="thread">
+          <h4>How long can hops really last in the freezer?</h4>
+          <div class="meta"><span><i class="fa-regular fa-comment"></i> 19 replies</span><span><i class="fa-regular fa-clock"></i> 6h ago</span></div>
+        </a>
+        <a href="#" class="thread">
+          <h4>First batch came out too sweet — what went wrong?</h4>
+          <div class="meta"><span><i class="fa-regular fa-comment"></i> 41 replies</span><span><i class="fa-regular fa-clock"></i> 1d ago</span></div>
+        </a>
+      </div>
+
+      <div class="side-card">
+        <h3><i class="fa-regular fa-calendar"></i> Upcoming Events</h3>
+        <div class="event">
+          <div class="event__date"><div class="d">05</div><div class="m">Jul</div></div>
+          <div class="event__txt"><h4>Online IPA Tasting</h4><p>7:00 PM · Zoom · Free</p></div>
+        </div>
+        <div class="event">
+          <div class="event__date"><div class="d">12</div><div class="m">Jul</div></div>
+          <div class="event__txt"><h4>All-Grain Mashing Workshop</h4><p>12:00 PM · Kyiv</p></div>
+        </div>
+        <div class="event">
+          <div class="event__date"><div class="d">20</div><div class="m">Jul</div></div>
+          <div class="event__txt"><h4>Homebrew Ale Competition</h4><p>Applications open now</p></div>
+        </div>
+      </div>
+
+    </aside>
+  </div>
+
+</div>
+{% endblock %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shopping Cart | Hop & Barley{% endblock %}
+
+{% block content %}
+<main class="cart-page-wrapper">
+  <div class="cart-container">
+    <h1 class="cart-title">Shopping Cart</h1>
+
+    <div class="cart-items-list" id="cart-items-list">
+      {% for item in cart %}
+      <div class="cart-item" data-price="{{ item.price }}">
+        {% if item.product.image %}
+        <img src="{{ item.product.image.url }}" alt="{{ item.product.name }}" class="cart-item__image">
+        {% else %}
+        <img src="{% static 'img/products/default_product.jpg' %}" alt="{{ item.product.name }}" class="cart-item__image">
+        {% endif %}
+        <div class="cart-item__body">
+          <div class="cart-item__details">
+            <h2 class="cart-item__name"><a href="{% url 'product_detail' item.product.slug %}" style="text-decoration: none; color: inherit;">{{ item.product.name }}</a></h2>
+            <div class="cart-item__price-info">
+              <p class="cart-item__price" data-item-total-price>
+                ${{ item.total_price }}
+              </p>
+              <span class="cart-item__price-tag">${{ item.price }} per item</span>
+            </div>
+          </div>
+          <div class="cart-item__actions">
+            <form action="{% url 'cart_update' item.product.slug %}" method="post" style="display:flex; align-items:center;">
+              {% csrf_token %}
+              <div class="cart-item__quantity-selector" style="margin-right: 1rem;">
+                <button type="button" class="quantity-btn-cart" onclick="let input=this.nextElementSibling; if(input.value > 1){ input.value--; this.form.submit(); }"><i class="fa-solid fa-minus"></i></button>
+                <input type="number" name="quantity" value="{{ item.quantity }}" min="1" max="{{ item.product.stock }}" style="width: 30px; text-align: center; border: none; background: transparent;" readonly>
+                <button type="button" class="quantity-btn-cart" onclick="let input=this.previousElementSibling; if(input.value < {{ item.product.stock }}){ input.value++; this.form.submit(); }"><i class="fa-solid fa-plus"></i></button>
+              </div>
+            </form>
+            <form action="{% url 'cart_remove' item.product.slug %}" method="post">
+              {% csrf_token %}
+              <button type="submit" class="button--remove" data-action="remove">
+                Remove <i class="fa-solid fa-xmark"></i>
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+      {% empty %}
+      <p>Your cart is empty.</p>
+      <a href="{% url 'product_list' %}" class="button button--secondary">Continue Shopping</a>
+      {% endfor %}
+    </div>
+
+    {% if cart|length > 0 %}
+    <div class="cart-summary">
+      <div class="cart-summary__total">
+        <p>Total</p>
+        <p id="cart-total-price">${{ cart.get_total_price }}</p>
+      </div>
+      <a href="{% url 'checkout' %}" class="button button--primary button--checkout">Proceed to Checkout</a>
+    </div>
+    {% endif %}
+  </div>
+</main>
+{% endblock %}

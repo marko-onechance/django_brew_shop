@@ -1,0 +1,203 @@
+{% extends "admin/base_site.html" %}
+{% block title %}Analytics | Admin{% endblock %}
+
+{% block extrahead %}
+{{ block.super }}
+<style>
+.an-grid-4 {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 16px;
+    margin: 24px 0;
+}
+.an-grid-2 {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+}
+.an-card {
+    background: var(--darkened-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 8px;
+    padding: 20px;
+}
+.an-card--center { text-align: center; }
+.an-card__value {
+    font-size: 28px;
+    font-weight: 700;
+    line-height: 1.1;
+}
+.an-card__label {
+    color: var(--body-quiet-color);
+    margin-top: 4px;
+    font-size: 13px;
+}
+.an-card h2 {
+    margin-top: 0;
+    font-size: 15px;
+    color: var(--body-fg);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 10px;
+    margin-bottom: 12px;
+}
+.an-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 13px;
+}
+.an-table th {
+    text-align: left;
+    padding: 7px 4px;
+    color: var(--body-quiet-color);
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-color);
+}
+.an-table th.right,
+.an-table td.right { text-align: right; }
+.an-table td {
+    padding: 8px 4px;
+    border-bottom: 1px solid var(--border-color);
+    color: var(--body-fg);
+}
+.an-table tr:last-child td { border-bottom: none; }
+.an-val--green  { color: #2e7d32; }
+.an-val--blue   { color: #1565c0; }
+.an-val--purple { color: #6a1b9a; }
+.an-val--orange { color: #e65100; }
+[data-theme="dark"] .an-val--green  { color: #66bb6a; }
+[data-theme="dark"] .an-val--blue   { color: #64b5f6; }
+[data-theme="dark"] .an-val--purple { color: #ce93d8; }
+[data-theme="dark"] .an-val--orange { color: #ffb74d; }
+@media (prefers-color-scheme: dark) {
+    .an-val--green  { color: #66bb6a; }
+    .an-val--blue   { color: #64b5f6; }
+    .an-val--purple { color: #ce93d8; }
+    .an-val--orange { color: #ffb74d; }
+}
+</style>
+{% endblock %}
+
+{% block content %}
+<h1>Analytics Dashboard</h1>
+
+<!-- KPI cards -->
+<div class="an-grid-4">
+  <div class="an-card an-card--center">
+    <div class="an-card__value an-val--green">${{ total_revenue|floatformat:2 }}</div>
+    <div class="an-card__label">Total Revenue</div>
+  </div>
+  <div class="an-card an-card--center">
+    <div class="an-card__value an-val--blue">{{ total_orders }}</div>
+    <div class="an-card__label">Total Orders</div>
+  </div>
+  <div class="an-card an-card--center">
+    <div class="an-card__value an-val--purple">{{ total_users }}</div>
+    <div class="an-card__label">Total Users</div>
+  </div>
+  <div class="an-card an-card--center">
+    <div class="an-card__value an-val--orange">${{ revenue_30d|floatformat:2 }}</div>
+    <div class="an-card__label">Revenue (last 30 days)</div>
+  </div>
+</div>
+
+<!-- Tables -->
+<div class="an-grid-2">
+
+  <div class="an-card">
+    <h2>Orders by Status</h2>
+    <table class="an-table">
+      <thead>
+        <tr>
+          <th>Status</th>
+          <th class="right">Count</th>
+          <th class="right">Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in orders_by_status %}
+        <tr>
+          <td style="text-transform:capitalize;">{{ row.status }}</td>
+          <td class="right">{{ row.count }}</td>
+          <td class="right">${{ row.revenue|floatformat:2 }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3" style="color:var(--body-quiet-color); padding:12px 4px;">No data yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="an-card">
+    <h2>Top 10 Products by Sales</h2>
+    <table class="an-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th class="right">Units</th>
+          <th class="right">Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for p in top_products %}
+        <tr>
+          <td>{{ p.product__name }}</td>
+          <td class="right">{{ p.total_qty }}</td>
+          <td class="right">${{ p.total_revenue|floatformat:2 }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3" style="color:var(--body-quiet-color); padding:12px 4px;">No data yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="an-card">
+    <h2>Last 30 Days — Orders per Day</h2>
+    <table class="an-table">
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th class="right">Orders</th>
+          <th class="right">Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in orders_per_day %}
+        <tr>
+          <td>{{ row.day }}</td>
+          <td class="right">{{ row.count }}</td>
+          <td class="right">${{ row.revenue|floatformat:2 }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3" style="color:var(--body-quiet-color); padding:12px 4px;">No data yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+  <div class="an-card">
+    <h2>Revenue by Category</h2>
+    <table class="an-table">
+      <thead>
+        <tr>
+          <th>Category</th>
+          <th class="right">Units</th>
+          <th class="right">Revenue</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for row in revenue_by_category %}
+        <tr>
+          <td>{{ row.product__category__name|default:"—" }}</td>
+          <td class="right">{{ row.total_qty }}</td>
+          <td class="right">${{ row.total_revenue|floatformat:2 }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3" style="color:var(--body-quiet-color); padding:12px 4px;">No data yet.</td></tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+
+</div>
+{% endblock %}

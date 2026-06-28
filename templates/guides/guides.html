@@ -1,0 +1,155 @@
+{% extends "base.html" %}
+{% load static %}
+{% block title %}Guides & Recipes | Hop & Barley{% endblock %}
+
+{% block content %}
+
+  <!-- Page header block: full-width, own background -->
+  <div class="guides-page-header">
+    <div class="container">
+      <div class="guides-header__top">
+        <div>
+          <p class="eyebrow">Knowledge for every brewer</p>
+          <h1 class="guides-header__title">Guides & Recipes</h1>
+        </div>
+      </div>
+      <p class="guides-header__desc">Tested recipes and step-by-step guides — from your first batch to your own signature styles.</p>
+    </div>
+  </div>
+
+<div class="container" style="padding-bottom: 64px;">
+
+  <!-- Featured guide: photo collage left, text right -->
+  <div class="guide-featured">
+    <div class="guide-featured__collage">
+      <div class="guide-featured__col-main">
+        <img src="{% static 'img/products/ipa_kit.jpg' %}" alt="IPA Kit">
+        <span class="guide-tag guide-tag--week">Recipe of the week</span>
+      </div>
+      <div class="guide-featured__col-side">
+        <img src="{% static 'img/products/cascade_hops.jpg' %}" alt="Cascade Hops">
+        <img src="{% static 'img/products/citra_hops.jpg' %}" alt="Citra Hops">
+      </div>
+    </div>
+    <div class="guide-featured__body">
+      <span class="guide-cat-label">American IPA</span>
+      <h2>West Coast IPA from Scratch</h2>
+      <p>Dry, hoppy, with a pronounced bitterness and citrus-pine aroma. The definitive starting point for anyone serious about homebrewing IPAs. Covers water chemistry, hop timing, and dry-hopping technique.</p>
+      <div class="guide-featured__meta">
+        <span><i class="fa-regular fa-clock"></i> 45 min read</span>
+        <span><i class="fa-solid fa-gauge-high"></i> Intermediate</span>
+        <span><i class="fa-solid fa-flask"></i> 20L batch</span>
+      </div>
+      <a href="#" class="button button--primary" style="margin-top: 24px; width: fit-content;">Read Guide</a>
+    </div>
+  </div>
+
+  <!-- Category filters -->
+  <div class="guides-filter guides-filter--bar">
+    <button class="guides-filter__btn guides-filter__btn--active">All</button>
+    <button class="guides-filter__btn">IPA</button>
+    <button class="guides-filter__btn">Lager</button>
+    <button class="guides-filter__btn">Stout</button>
+    <button class="guides-filter__btn">Wheat</button>
+  </div>
+
+  <!-- Guides grid -->
+  <div class="guides-grid">
+
+    <article class="guide-card">
+      <div class="guide-card__img">
+        <img src="{% static 'img/products/ipa_kit.jpg' %}" alt="">
+        <span class="guide-tag">Beginner</span>
+      </div>
+      <div class="guide-card__body">
+        <span class="guide-cat-label">Extract Brewing</span>
+        <h3>Your First Extract Brew</h3>
+        <p>No mash required. Brew a solid pale ale with extract — the fastest path from ingredients to glass.</p>
+        <div class="guide-card__meta">
+          <span><i class="fa-regular fa-clock"></i> 20 min</span>
+          <span><i class="fa-solid fa-flask"></i> 10L</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="guide-card">
+      <div class="guide-card__img">
+        <img src="{% static 'img/products/caramel_malt.jpg' %}" alt="">
+        <span class="guide-tag">Intermediate</span>
+      </div>
+      <div class="guide-card__body">
+        <span class="guide-cat-label">Stout</span>
+        <h3>Oatmeal Stout Recipe</h3>
+        <p>Rich, creamy, and deeply satisfying. Grain bill, mash temps, and yeast selection for a silky-smooth stout.</p>
+        <div class="guide-card__meta">
+          <span><i class="fa-regular fa-clock"></i> 35 min</span>
+          <span><i class="fa-solid fa-flask"></i> 20L</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="guide-card">
+      <div class="guide-card__img">
+        <img src="{% static 'img/products/pilsner_malt.jpg' %}" alt="">
+        <span class="guide-tag">Advanced</span>
+      </div>
+      <div class="guide-card__body">
+        <span class="guide-cat-label">Lager</span>
+        <h3>Brewing a Czech Pilsner</h3>
+        <p>Cold fermentation, decoction mashing, and lagering explained. Patience required — results are worth it.</p>
+        <div class="guide-card__meta">
+          <span><i class="fa-regular fa-clock"></i> 50 min</span>
+          <span><i class="fa-solid fa-flask"></i> 20L</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="guide-card">
+      <div class="guide-card__img">
+        <img src="{% static 'img/products/maris_otter_malt.jpg' %}" alt="">
+        <span class="guide-tag">Water Chemistry</span>
+      </div>
+      <div class="guide-card__body">
+        <span class="guide-cat-label">Theory</span>
+        <h3>Water Profiles for Homebrewers</h3>
+        <p>A practical primer on adjusting your tap water for IPAs, stouts, and lagers — no chemistry degree needed.</p>
+        <div class="guide-card__meta">
+          <span><i class="fa-regular fa-clock"></i> 25 min</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="guide-card">
+      <div class="guide-card__img">
+        <img src="{% static 'img/products/imperial_yeast.jpg' %}" alt="">
+        <span class="guide-tag">Troubleshooting</span>
+      </div>
+      <div class="guide-card__body">
+        <span class="guide-cat-label">Troubleshooting</span>
+        <h3>Why Is My Beer Off-Flavoured?</h3>
+        <p>Identify the 10 most common homebrew faults and learn exactly how to fix them next time.</p>
+        <div class="guide-card__meta">
+          <span><i class="fa-regular fa-clock"></i> 30 min</span>
+        </div>
+      </div>
+    </article>
+
+    <article class="guide-card">
+      <div class="guide-card__img">
+        <img src="{% static 'img/products/safale_us05_yeast.jpg' %}" alt="">
+        <span class="guide-tag">Beginner</span>
+      </div>
+      <div class="guide-card__body">
+        <span class="guide-cat-label">Yeast</span>
+        <h3>Choosing the Right Yeast</h3>
+        <p>Dry vs. liquid, ale vs. lager — what each strain brings in terms of flavour, attenuation, and flocculation.</p>
+        <div class="guide-card__meta">
+          <span><i class="fa-regular fa-clock"></i> 15 min</span>
+        </div>
+      </div>
+    </article>
+
+  </div>
+
+</div>
+{% endblock %}

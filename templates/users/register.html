@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Sign Up | Hop & Barley{% endblock %}
+
+{% block content %}
+<main class="auth-page-wrapper">
+  <div class="auth-background">
+    <img src="{% static 'img/background/pattern.jpg' %}" alt="Background pattern">
+  </div>
+  <div class="auth-form-container">
+    <div class="auth-container auth-container--register">
+      <div class="Legend">
+        <h1 class="auth-title">Sign Up</h1>
+      </div>
+
+      <form class="auth-form" method="post" action="{% url 'register' %}">
+        {% csrf_token %}
+        {{ form.as_p }}
+
+        <div class="ButtonGroup">
+          <button type="submit" class="button button--primary">Create account</button>
+        </div>
+      </form>
+
+      <p class="auth-switch">Already have an account? <a href="{% url 'login' %}">Sign in</a></p>
+    </div>
+  </div>
+</main>
+{% endblock %}

@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}My Account | Hop & Barley{% endblock %}
+
+{% block content %}
+<main class="account-page-wrapper">
+  <div class="account-container">
+
+    <!-- Tabs Navigation -->
+    <div class="account-tabs">
+      <button class="account-tab active" data-tab-target="#order-history">Order History</button>
+      <button class="account-tab" data-tab-target="#account-info">Account Information</button>
+    </div>
+
+    <!-- Tabs Content -->
+    <div class="tab-content">
+      <!-- Order History Panel -->
+      <div id="order-history" class="tab-pane active">
+        <form method="get" action="{% url 'account' %}" style="margin-bottom: 1.5rem; display: flex; gap: 0.5rem; align-items: center; flex-wrap: wrap;">
+          <label for="status-filter" style="font-weight: 500;">Filter by status:</label>
+          <select name="status" id="status-filter" class="Input" style="width: auto; min-width: 210px; padding-right: 40px;" onchange="this.form.submit()">
+            <option value="">All orders</option>
+            {% for value, label in order_statuses %}
+            <option value="{{ value }}" {% if status_filter == value %}selected{% endif %}>{{ label }}</option>
+            {% endfor %}
+          </select>
+          {% if status_filter %}<a href="{% url 'account' %}" class="button button--secondary" style="padding: 6px 12px;">Clear</a>{% endif %}
+        </form>
+        <div class="order-history-table">
+          <!-- Table Header -->
+          <div class="order-table-header">
+            <div class="order-table-cell">Order Details</div>
+            <div class="order-table-cell">Order Status</div>
+            <div class="order-table-cell">Total</div>
+          </div>
+          <!-- Table Body -->
+          <div class="order-table-body">
+            {% for order in orders %}
+            <div class="order-table-row">
+              <div class="order-table-cell">
+                <span class="order-id">#{{ order.id }}</span>
+                <span class="order-date">{{ order.created_at|date:"d M Y" }}</span>
+              </div>
+              <div class="order-table-cell">
+                <span class="order-status">{{ order.get_status_display }}</span>
+              </div>
+              <div class="order-table-cell">
+                <span class="order-total">${{ order.total_price }}</span>
+              </div>
+            </div>
+            {% empty %}
+            <p style="padding: 1rem;">
+              {% if status_filter %}
+                No orders with status "{{ status_filter }}".
+              {% else %}
+                You have no orders yet.
+              {% endif %}
+            </p>
+            {% endfor %}
+          </div>
+        </div>
+      </div>
+
+      <!-- Account Information Panel -->
+      <div id="account-info" class="tab-pane">
+        <div class="account-form-container">
+          <h2 class="account-form-title">Personal Info</h2>
+          <div style="margin-bottom: 1rem; padding: 0.75rem 1rem; background: var(--background-default); border-radius: 6px; color: var(--black-main);">
+            <strong>Username:</strong> {{ user.username }}
+          </div>
+          <p style="margin-bottom: 1rem;">
+            <a href="{% url 'profile_edit' %}" class="button button--primary" style="display: inline-block;">Edit Profile</a>
+            <a href="{% url 'password_change' %}" class="button button--secondary" style="display: inline-block; margin-left: 0.5rem;">Change Password</a>
+          </p>
+          <div style="padding: 0.75rem 1rem; background: var(--background-grey); border: 1px solid var(--border-default); border-radius: 6px; line-height: 2; color: var(--black-main);">
+            <p><strong>Email:</strong> {{ user.email|default:"—" }}</p>
+            <p><strong>First name:</strong> {{ user.first_name|default:"—" }}</p>
+            <p><strong>Last name:</strong> {{ user.last_name|default:"—" }}</p>
+            <p><strong>Phone:</strong> {{ user.profile.phone|default:"—" }}</p>
+            <p><strong>Bio:</strong> {{ user.profile.bio|default:"—" }}</p>
+          </div>
+          <form method="post" action="{% url 'logout' %}" style="margin-top: 1.5rem;">
+            {% csrf_token %}
+            <button type="submit" class="button button--secondary button--full-width">Logout</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</main>
+{% endblock %}

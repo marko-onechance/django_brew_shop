@@ -1,0 +1,39 @@
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_DB: myshop_db
+      POSTGRES_USER: myshop_user
+      POSTGRES_PASSWORD: myshop_password
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U myshop_user -d myshop_db"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  web:
+    build: .
+    # entrypoint runs migrations + seed automatically; CMD is gunicorn from Dockerfile
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_NAME=myshop_db
+      - DATABASE_USER=myshop_user
+      - DATABASE_PASSWORD=myshop_password
+      - DATABASE_HOST=db
+      - DATABASE_PORT=5432
+      - DEBUG=True
+      - SECRET_KEY=django-insecure-dummy-key-for-dev
+      - ALLOWED_HOSTS=localhost,127.0.0.1,0.0.0.0
+
+volumes:
+  postgres_data:
