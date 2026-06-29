@@ -1,9 +1,3 @@
-# 🍺 Hop & Barley
-
-> **Language / Мова:** [English](README.md) | Українська
-
-Повноцінний інтернет-магазин інгредієнтів для домашнього пивоваріння — Django веб-інтерфейс + DRF REST API, на PostgreSQL & Docker.
-
 ![CI](https://github.com/marko-onechance/django_brew_shop/actions/workflows/ci.yml/badge.svg)
 ![Python](https://img.shields.io/badge/python-3.11-blue?logo=python&logoColor=white)
 ![Django](https://img.shields.io/badge/Django-4.2-092E20?logo=django&logoColor=white)
@@ -13,6 +7,12 @@
 ![tests](https://img.shields.io/badge/tests-36%20passed-brightgreen)
 ![lint](https://img.shields.io/badge/lint-flake8-yellow)
 ![types](https://img.shields.io/badge/types-mypy-blue)
+
+# 🍺 Hop & Barley
+
+> **Language / Мова:** [English](README.md) | Українська
+
+Повноцінний інтернет-магазин інгредієнтів для домашнього пивоваріння — Django веб-інтерфейс + DRF REST API, на PostgreSQL & Docker.
 
 ### 🔗 [Live Demo](https://hop-and-barley.onrender.com)
 
